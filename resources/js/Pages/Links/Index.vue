@@ -1,7 +1,9 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-// import Welcome from '@/Components/Welcome.vue';
-import Links from "@/Pages/Links/Index.vue"
+
+defineProps({
+    links: Object
+})
 
 </script>
 
@@ -16,7 +18,10 @@ import Links from "@/Pages/Links/Index.vue"
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                    <Links />
+                    <!-- {{links}} -->
+                    <p v-for="link in links" :key="link.id">
+                        {{ link.title }}
+                    </p>
                 </div>
             </div>
         </div>
