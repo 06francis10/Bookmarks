@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+// use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class LinkController extends Controller
@@ -13,7 +16,8 @@ class LinkController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Links/Index",["links"=>Link::all()]);
+        $links=Link::where("user_id",Auth::user()->id)->paginate(15);
+        return Inertia::render("Links/Index",["links"=>$links]);
     }
 
     /**
