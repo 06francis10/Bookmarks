@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
-// use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class LinkController extends Controller
@@ -16,8 +14,28 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links=Link::where("user_id",Auth::user()->id)->paginate(15);
-        return Inertia::render("Links/Index",["links"=>$links]);
+        $search="";
+        $sortBy="";
+        if(request()->has("search") && request("search")!=null){
+            $search=request("search");
+            if(request()->has("sortBy") && request("sortBy")!=null){
+                $sortBy=request("sortBy");
+                $links=Link::where("user_id",Auth::user()->id)->where("title","LIKE","%".$search."%")->orderBy($sortBy,"asc")->paginate(15)->appends(request()->except("page"));
+            }
+            $links=Link::where("user_id",Auth::user()->id)->where("title","LIKE","%".$search."%")->orderBy("id","desc")->paginate(15)->appends(request()->except("page"));
+        }else{
+            if(request()->has("sortBy") && request("sortBy")!=null){
+                $sortBy=request("sortBy");
+                $links=Link::where("user_id",Auth::user()->id)->orderBy($sortBy,"asc")->paginate(15)->appends(request()->except("page"));
+            }else{
+                $links=Link::where("user_id",Auth::user()->id)->orderBy("id","desc")->paginate(15)->appends(request()->except("page"));
+            }
+        }
+        return Inertia::render("Links/Index",[
+            "links"=>$links,
+            "buscar"=>$search,
+            "sortBy"=>$sortBy,
+        ]);
     }
 
     /**
@@ -34,6 +52,17 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         //
+        $link=new Link([
+            "title"=>$request->name,
+            "url"=>$request->address,
+            "user_id"=>Auth::user()->id,
+        ]);
+        $link->save();
+        if($link){
+            return back();
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -50,6 +79,7 @@ class LinkController extends Controller
     public function edit(string $id)
     {
         //
+        // return Inertia::render("Links/Edit",["link"=>$id]);
     }
 
     /**
@@ -57,14 +87,22 @@ class LinkController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $link=Link::findOrFail($id);
+        $link->title=$request->name;
+        $link->url=$request->url;
+        $link->save();
+        return back();
+        // return $request->id.", ".$request->title.", ".$request->url;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Link $id)
     {
-        //
+        // Tu lógica para eliminar el recurso
+        if($id->delete()){
+            return back();
+        }
     }
 }
