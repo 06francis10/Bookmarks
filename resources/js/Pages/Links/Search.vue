@@ -11,29 +11,21 @@ const props=defineProps({
 
 const form=reactive({
     search:props.buscar,
-    sortBy:props.sortBy,
 });
 
 function submit(){
-    if((form.search==null || form.search=="") && (form.sortBy==null ||form.sortBy=="")){
+    if((form.search==null || form.search=="")){
         router.get(route('dashboard'))
-    }else if(form.search==null || form.search==""){
-        router.get(route('dashboard'),{"sortBy":form.sortBy})
-    }else if(form.sortBy==null || form.sortBy==""){
-        router.get(route('dashboard'),{"search":form.search})
     }else{
-        router.get(route('dashboard',form))
+        router.get(window.location.href,form);
+        // router.get(route('dashboard'),form)
     }
 }
 </script>
 <template>
     <form method="get" class="flex flex-row" @submit.prevent="submit">
-        <TextInput v-model="form.search" placeholder="Buscar..."></TextInput>
-        <select name="" v-model="form.sortBy" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-            <option value="">Ordenar Por</option>
-            <option value="title">title</option>
-            <option value="url">url</option>
-        </select>
+        <TextInput v-model="form.search" placeholder="Buscar..." required></TextInput>
         <SecondaryButton type="submit">Buscar</SecondaryButton>
     </form>
+    <SecondaryButton @click="router.get(route('dashboard'))">Restart</SecondaryButton>
 </template>

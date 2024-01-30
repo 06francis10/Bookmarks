@@ -26,7 +26,4 @@ Route::middleware([
     Route::post('/dashboard',[LinkController::class, "store"])->name("link.store");
     Route::put('/dashboard/{id}',[LinkController::class, "update"])->name("link.update");
     Route::delete("/dashboard/{id}",[LinkController::class,"destroy"])->name("link.destroy");
-    Route::get("/prueba/{sortby}",function($sortby){
-        return "ordenando por ".$sortby;
-    })->name("Prueba");
 });
