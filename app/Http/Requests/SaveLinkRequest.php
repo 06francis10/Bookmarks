@@ -24,7 +24,7 @@ class SaveLinkRequest extends FormRequest
     {
         return [
             "name"=>["required","string","max:500"],
-            "address"=>["required","max:500","unique:links,url"],
+            "address"=>["required","url","max:500","unique:links,url"],
         ];
     }
 }

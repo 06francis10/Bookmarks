@@ -10,6 +10,7 @@ import Create from './Create.vue';
 import { router, useForm } from '@inertiajs/vue3';
 import Search from './Search.vue';
 import Import from './Import.vue';
+import Edit from './Edit.vue';
 
 const props = defineProps({
     links: Object,
@@ -25,10 +26,8 @@ const showModalEdit = ref(false)
 
 const link = ref(null)
 const showModal = (c) => {
-    form.id = c.id,
-        form.name = c.title,
-        form.address = c.url,
-        showModalEdit.value = true
+    link.value=c;
+    showModalEdit.value = true
 };
 const closeModal = () => {
     showModalEdit.value = false;
@@ -44,17 +43,6 @@ const form = useForm({
 const formDelete = useForm({
     id: null,
 })
-
-function submit() {
-    form.put(route('link.update', form.id), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            form.clearErrors()
-            closeModal();
-        }
-    })
-}
 
 function eliminar(id) {
     formDelete.id = id;
@@ -133,31 +121,6 @@ function orderBy(params) {
                 <Pagination :pagination="props.links.links"></Pagination>
             </div>
         </div>
-        <DialogModal :show="showModalEdit" @close="closeModal">
-            <template #title>
-                Editar Marcadores
-            </template>
-            <template #content>
-                <form id="bookmark-form-edit" @submit.prevent="submit">
-                    <div class="flex flex-col gap-3">
-                        <input type="text"
-                            class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                            placeholder="Name" v-model="form.name">
-                        <div v-if="props.errors.name">{{ props.errors.name }}</div>
-                        <input type="url"
-                            class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                            placeholder="Address" v-model="form.address">
-                        <div v-if="props.errors.address">{{ props.errors.address }}</div>
-                    </div>
-                </form>
-            </template>
-            <template #footer>
-                <div class="flex justify-end gap-2">
-                    <PrimaryButton form="bookmark-form-edit" :disabled="form.processing">Edit</PrimaryButton>
-                    <DangerButton @click="closeModal">Cancel</DangerButton>
-                </div>
-            </template>
-        </DialogModal>
         <DialogModal :show="ModalDelete" @close="closeModalDelete">
             <template #title>Delete Bookmark</template>
             <template #content>
@@ -173,4 +136,5 @@ function orderBy(params) {
             </template>
         </DialogModal>
     </AppLayout>
+    <Edit :errors="errors" :link="link" :view-modal.sync="showModalEdit" @some-event="closeModal()"></Edit>
 </template>

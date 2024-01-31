@@ -23,7 +23,7 @@ class UpdateLinkRequest extends FormRequest
     {
         return [
             "name"=>["required","string","max:500"],
-            "address"=>["required","max:500","unique:links,url,".$this->id],
+            "address"=>["required","url","max:500","unique:links,url,".$this->id],
         ];
     }
 }
