@@ -1,17 +1,18 @@
 <script setup>
+// Imports
 import AppLayout from '@/Layouts/AppLayout.vue';
 import TableView from '@/Components/TableView.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import Pagination from '@/Components/Pagination.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ref } from 'vue';
-import DialogModal from '@/Components/DialogModal.vue';
 import Create from './Create.vue';
-import { router, useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import Search from './Search.vue';
 import Import from './Import.vue';
 import Edit from './Edit.vue';
-
+import Delete from './Delete.vue'
+// variables
 const props = defineProps({
     links: Object,
     buscar: String,
@@ -19,53 +20,25 @@ const props = defineProps({
     errors: Object,
     orderBy: String,
 })
-
 const ModalDelete = ref(false)
-
 const showModalEdit = ref(false)
-
 const link = ref(null)
+// functions
 const showModal = (c) => {
-    link.value=c;
+    link.value = c;
     showModalEdit.value = true
 };
 const closeModal = () => {
     showModalEdit.value = false;
-    form.reset();
-    form.clearErrors()
-};
-
-const form = useForm({
-    id: null,
-    name: null,
-    address: null,
-})
-const formDelete = useForm({
-    id: null,
-})
-
-function eliminar(id) {
-    formDelete.id = id;
-    formDelete.delete(route("link.destroy", { "id": id }), {
-        preserveScroll: true,
-        onSuccess: () => {
-            formDelete.reset();
-            formDelete.clearErrors()
-            closeModalDelete();
-        }
-    })
 }
-
 const showModalDelete = (c) => {
     link.value = c
     ModalDelete.value = true;
 }
-
 function closeModalDelete() {
-    ModalDelete.value = false;
     link.value = null
+    ModalDelete.value = false;
 }
-
 function orderBy(params) {
     console.log(props.orderBy)
     var order = props.orderBy;
@@ -76,7 +49,6 @@ function orderBy(params) {
     }
     router.get(window.location.href, { "orderBy": order, "sortBy": params, })
 }
-
 </script>
 <template>
     <AppLayout title="Dashboard">
@@ -121,20 +93,7 @@ function orderBy(params) {
                 <Pagination :pagination="props.links.links"></Pagination>
             </div>
         </div>
-        <DialogModal :show="ModalDelete" @close="closeModalDelete">
-            <template #title>Delete Bookmark</template>
-            <template #content>
-                Are you sure you want to delete this Bookmark?
-                <p><b>{{ link.title }}</b></p>
-                <p><b>{{ link.url }}</b></p>
-            </template>
-            <template #footer>
-                <div class="flex gap-3">
-                    <DangerButton @click="eliminar(link.id)">Destroy</DangerButton>
-                    <PrimaryButton @click="closeModalDelete">Close</PrimaryButton>
-                </div>
-            </template>
-        </DialogModal>
     </AppLayout>
-    <Edit :errors="errors" :link="link" :view-modal.sync="showModalEdit" @some-event="closeModal()"></Edit>
+    <Edit :errors="errors" :link="link" :view-modal.sync="showModalEdit" @close-modal-edit="closeModal()"></Edit>
+    <Delete :errors="errors" :link="link" :view-modal.sync="ModalDelete" @close-modal-delete="closeModalDelete()"></Delete>
 </template>

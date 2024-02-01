@@ -1,10 +1,14 @@
 <script setup>
+// imports
 import DangerButton from '@/Components/DangerButton.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import { useForm } from '@inertiajs/vue3';
 import { watch } from 'vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { defineEmits } from 'vue';
+
+// variables
+
 const props = defineProps({
     viewModal: {
         type: Boolean,
@@ -13,18 +17,21 @@ const props = defineProps({
     errors: Object,
     link: Object,
 })
-
-const emit=defineEmits(['someEvent'])
-
+const emit=defineEmits(['closeModalEdit'])
 const form = useForm({
     id: null,
     name: null,
     address: null,
 })
+
+// functions
+
 watch(() => props.link, (newLink) => {
-    form.id = newLink.id;
-    form.name = newLink.title;
-    form.address = newLink.url;
+    if(props.link!=null){
+        form.id = newLink.id;
+        form.name = newLink.title;
+        form.address = newLink.url;
+    }
 })
 function submit() {
     form.put(route('link.update', form.id), {
@@ -32,12 +39,14 @@ function submit() {
         onSuccess: () => {
             form.reset();
             form.clearErrors()
-            emit('someEvent');
+            emit('closeModalEdit');
         }
     })
 }
 function cerrarModal () {
-    emit('someEvent');
+    form.reset();
+    form.clearErrors()
+    emit('closeModalEdit');
 }
 </script>
 <template>
