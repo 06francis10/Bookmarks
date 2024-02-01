@@ -5,8 +5,8 @@ import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 
 const props=defineProps({
-    buscar: String,
-    sortBy: String,
+    buscar: {type:String,default:null},
+    sortBy: {type:String,default:null},
 })
 
 const form=reactive({
@@ -18,7 +18,6 @@ function submit(){
         router.get(route('dashboard'))
     }else{
         router.get(window.location.href,form);
-        // router.get(route('dashboard'),form)
     }
 }
 </script>

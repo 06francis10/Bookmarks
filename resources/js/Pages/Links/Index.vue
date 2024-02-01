@@ -15,8 +15,8 @@ import Delete from './Delete.vue'
 // variables
 const props = defineProps({
     links: Object,
-    buscar: String,
-    sortBy: String,
+    buscar: {type:String,default:""},
+    sortBy: {type:String,default:""},
     errors: Object,
     orderBy: String,
 })
@@ -40,7 +40,6 @@ function closeModalDelete() {
     ModalDelete.value = false;
 }
 function orderBy(params) {
-    console.log(props.orderBy)
     var order = props.orderBy;
     if (props.orderBy == "desc") {
         order = "asc";
@@ -61,7 +60,7 @@ function orderBy(params) {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-20">
                 <div class="my-3 flex flex-row gap-2 justify-between max-md:flex-col max-md:m-4">
                     <Create :errors="props.errors"></Create>
-                    <Search :buscar="props.buscar" :sort-by="props.sortBy" class="max-md:order-last"></Search>
+                    <Search :buscar="props.buscar" :sort-by="props.sortBy"></Search>
                     <Import></Import>
                 </div>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl">

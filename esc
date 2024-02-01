@@ -1,0 +1,53 @@
+[33mcommit 3dffb713f87ef45acd22a6cee33f6ac2529b851d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Wed Jan 31 21:52:49 2024 -0500
+
+    Se separo el modal Delete en un componente
+
+[33mcommit a508c9cbf5ef5045113c5f3aa09c1ee686e7aabe[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Wed Jan 31 18:28:50 2024 -0500
+
+    Se Modularizo el modal Edit
+
+[33mcommit 794d1be70ad92ce426d1cf3415862f3236aedbf1[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Tue Jan 30 17:25:13 2024 -0500
+
+    Se Agrego Validaciones en el Controlador LinkController
+
+[33mcommit d962a0aca6482468a78e57a62b74a1d0ebfbe801[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Sun Jan 21 18:25:26 2024 -0500
+
+    Se agrego Modales de Crear, Editar y Eliminar
+
+[33mcommit 216bd74c156a66effac48a71effaff34e8c86ad6[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Wed Jan 3 00:06:28 2024 -0500
+
+    Se agrego una Paginacion
+
+[33mcommit f4ad2eaf89c0b180b6a816eb665ec5e7eab9ebd7[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Mon Jan 1 23:41:05 2024 -0500
+
+    Se agrego tabla de links en la pagina principal del usuario
+
+[33mcommit 0febf985d855bd11bf1c0115403db87571d4b141[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Sun Dec 31 21:18:44 2023 -0500
+
+    Creando las primeras migraciones
+
+[33mcommit 2292f97df0944b9fc536dd96487ac58ce35f86e1[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Sun Dec 31 20:30:18 2023 -0500
+
+    Limpiando Proyecto
+
+[33mcommit a9a1bc4fcc16768eff2c7c511e00e073fd01e17d[m
+Author: Francis <francisfabianfajardoaguilar@gmail.com>
+Date:   Sun Dec 31 20:07:18 2023 -0500
+
+    Comienzo del proyecto
