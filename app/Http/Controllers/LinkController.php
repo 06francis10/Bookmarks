@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -108,5 +109,8 @@ class LinkController extends Controller
         if ($id->delete()) {
             return back();
         }
+    }
+    public function export(Request $request){
+        
     }
 }
