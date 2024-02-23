@@ -1,5 +1,6 @@
 <script setup>
 // Imports
+import Export from './Export.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import TableView from '@/Components/TableView.vue';
 import DangerButton from '@/Components/DangerButton.vue';
@@ -39,6 +40,7 @@ function closeModalDelete() {
     link.value = null
     ModalDelete.value = false;
 }
+
 function orderBy(params) {
     var order = props.orderBy;
     if (props.orderBy == "desc") {
@@ -62,6 +64,7 @@ function orderBy(params) {
                     <Create :errors="props.errors"></Create>
                     <Search :buscar="props.buscar" :sort-by="props.sortBy"></Search>
                     <Import></Import>
+                    <Export></Export>
                 </div>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl">
                     <TableView>
